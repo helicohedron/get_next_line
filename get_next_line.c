@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/19 13:32:30 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/19 20:07:19 by camille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,25 @@ char *get_next_line(int fd)
 	// check if saved_data has newline or EOF
 	while (!is_line(saved_data))
 	{
-		buffer = malloc(BUFFER_SIZE);
+		buffer = malloc(BUFFER_SIZE + 1);
 		if (!buffer)
 		{
 			//free(buffer);			
 			return (NULL);
 		}
 		size = read(fd, buffer, BUFFER_SIZE);
-		if (size <= 0)
-			break ; // or free and return?
-		else
+		if (size == 0)
+			return (saved_data);
+		else if (size > 0)
+        {
 			saved_data = ft_strjoin(saved_data, buffer);
+            buffer[BUFFER_SIZE] = '\0';            
+        }
+        else
+        {
+            free(buffer);
+            return (NULL);
+        }    
 	}
 
 	line = get_line(saved_data);
