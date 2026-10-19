@@ -6,7 +6,7 @@
 /*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/19 20:07:19 by camille          ###   ########.fr       */
+/*   Updated: 2026/10/19 20:08:23 by camille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(void)
 {
 	int	fd;
 
-	fd = open("test.txt", O_RDONLY | O_CREAT );
+	fd = open("test.txt", O_RDONLY);
 	if (fd == -1)
 		printf("Error");
 	printf("%s", get_next_line(fd));
