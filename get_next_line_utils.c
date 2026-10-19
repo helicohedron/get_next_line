@@ -6,11 +6,16 @@
 /*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 17:37:16 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/15 19:04:26 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/19 13:41:27 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// detects \n or EOF in string
+#include "get_next_line.h"
+
+static void	*ft_memcpy(void *dst, const void *src, int n);
+static int	ft_strlen(const char *s);
+
+// detects \n in string
 int	is_line(char *string)
 {
 	int	i;
@@ -18,7 +23,7 @@ int	is_line(char *string)
 	i = 0;
 	while (string[i])
 	{
-		if (string[i] == '\n' || string[i++] == '\0')
+		if (string[i] == '\n')
 			return (1);
 		i++;
 	}
@@ -33,7 +38,7 @@ char	*get_line(char *string)
 
 	while (*string != '\n' && *string != '\0')
 	{
-		*copy = *string;
+		copy = string;
 		string++;
 		copy++;
 	}
@@ -48,7 +53,48 @@ char	*get_line(char *string)
 }
 
 // function that appends a string to a new string
-char	*append_string(char *string)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	
+	int		s1_len;
+	int		s2_len;
+	char	*newstr;
+
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	newstr = malloc(1 + s1_len + s2_len);
+	if (!newstr)
+		return (NULL);
+	ft_memcpy(newstr, s1, s1_len);
+	ft_memcpy(newstr + s1_len, s2, s2_len);
+	newstr[s1_len + s2_len] = '\0';
+	return (newstr);
+}
+
+static void	*ft_memcpy(void *dst, const void *src, int n)
+{
+	int					i;
+	const unsigned char	*source;
+	unsigned char		*destination;
+
+	i = 0;
+	source = src;
+	destination = dst;
+	while (i < n)
+	{
+		destination[i] = source[i];
+		i++;
+	}
+	return (dst);
+}
+
+static int	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }
