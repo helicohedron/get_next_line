@@ -6,7 +6,7 @@
 /*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/19 20:08:23 by camille          ###   ########.fr       */
+/*   Updated: 2026/10/19 20:13:39 by camille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,16 @@ char *get_next_line(int fd)
 	while (!is_line(saved_data))
 	{
 		buffer = malloc(BUFFER_SIZE + 1);
-		if (!buffer)
-		{
-			//free(buffer);			
+		if (!buffer)		
 			return (NULL);
-		}
 		size = read(fd, buffer, BUFFER_SIZE);
-		if (size == 0)
-			return (saved_data);
-		else if (size > 0)
+		if (size > 0)
         {
+            buffer[size] = '\0'; // null terminate the buffer           
 			saved_data = ft_strjoin(saved_data, buffer);
-            buffer[BUFFER_SIZE] = '\0';            
         }
+        else if (size == 0)
+			return (saved_data);
         else
         {
             free(buffer);
