@@ -1,17 +1,16 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-char	*get_line(void *dst, const void *src)
+static int	get_linesize(char *string);
+
+char	*get_line(char *dst, char *src, int size)
 {
 	int					i;
-	const unsigned char	*source;
-	unsigned char		*destination;
 
 	i = 0;
-	source = src;
-	destination = dst;
-	while (source[i])
+	while (i < size)
 	{
-		destination[i] = source[i];
+		dst[i] = src[i];
 		i++;
 	}
 	return (dst);
@@ -19,10 +18,25 @@ char	*get_line(void *dst, const void *src)
 
 int	main(void)
 {
-	char	*copy = NULL;
-	char	*string = "Hello";
+	char	*copy;
+	char	*string = "HelloWorld";
+	int		size = get_linesize(string);
 
-	copy = get_line(copy, string);
+	copy = malloc(size);
+	copy = get_line(copy, string, size);
 	printf("%s", copy);
+	free(copy);
 	return (0);
+}
+
+static int	get_linesize(char *string)
+{
+	int	i;
+
+	i = 0;
+	while (string[i] != '\n')
+	{
+		i++;
+	}
+	return (i);
 }

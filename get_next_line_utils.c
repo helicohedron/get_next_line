@@ -6,7 +6,7 @@
 /*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 17:37:16 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/19 13:41:27 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/19 15:12:28 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,30 @@ int	is_line(char *string)
 	return (0);
 }
 
-// copies and returns the string before & including \n or \0
+// copies and returns the string before & including \n
 // moves the ptr of parameter string
-char	*get_line(char *string)
+char	*get_line(char *dst, char *src, int size)
 {
-	char	*copy;
+	int					i;
 
-	while (*string != '\n' && *string != '\0')
+	i = 0;
+	while (i < size)
 	{
-		copy = string;
-		string++;
-		copy++;
+		dst[i] = src[i];
+		i++;
 	}
-	if (*string == '\n')
-	{
-		*copy = '\n';
-		string++;		
-	}
-	else if (*string == '\0')
-		*copy = '\0';
-	return (copy);
+	dst[i] = '\n';
+	return (dst);
+}
+
+int	get_linesize(char *string)
+{
+	int	i;
+
+	i = 0;
+	while (string[i] != '\n')
+		i++;
+	return (i);
 }
 
 // function that appends a string to a new string

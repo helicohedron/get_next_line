@@ -6,7 +6,7 @@
 /*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/19 13:32:30 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/19 15:34:20 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char *get_next_line(int fd)
 	char		*buffer;
 	int			size;
 	char		*line;
+	int			linesize;
 
 	// check if saved_data has newline or EOF
 	while (!is_line(saved_data))
@@ -41,7 +42,9 @@ char *get_next_line(int fd)
 			saved_data = ft_strjoin(saved_data, buffer);
 	}
 
-	line = get_line(saved_data);
+	linesize = get_linesize(saved_data);
+	line = malloc(linesize + 1);
+	line = get_line(line, saved_data, linesize);
 	free(buffer);
 	return (line);
 }
@@ -49,10 +52,13 @@ char *get_next_line(int fd)
 int	main(void)
 {
 	int	fd;
-
+	char *line;
+	
 	fd = open("test.txt", O_RDONLY | O_CREAT );
 	if (fd == -1)
 		printf("Error");
-	printf("%s", get_next_line(fd));
+	line = get_next_line(fd);
+	printf("%s", line);
+	free(line);
 	return(0);
 }
