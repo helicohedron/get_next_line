@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/19 15:34:20 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/19 20:13:39 by camille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,22 @@ char *get_next_line(int fd)
 	// check if saved_data has newline or EOF
 	while (!is_line(saved_data))
 	{
-		buffer = malloc(BUFFER_SIZE);
-		if (!buffer)
-		{
-			//free(buffer);			
+		buffer = malloc(BUFFER_SIZE + 1);
+		if (!buffer)		
 			return (NULL);
-		}
 		size = read(fd, buffer, BUFFER_SIZE);
-		if (size <= 0)
-			break ; // or free and return?
-		else
+		if (size > 0)
+        {
+            buffer[size] = '\0'; // null terminate the buffer           
 			saved_data = ft_strjoin(saved_data, buffer);
+        }
+        else if (size == 0)
+			return (saved_data);
+        else
+        {
+            free(buffer);
+            return (NULL);
+        }    
 	}
 
 	linesize = get_linesize(saved_data);
@@ -52,9 +57,8 @@ char *get_next_line(int fd)
 int	main(void)
 {
 	int	fd;
-	char *line;
-	
-	fd = open("test.txt", O_RDONLY | O_CREAT );
+
+	fd = open("test.txt", O_RDONLY);
 	if (fd == -1)
 		printf("Error");
 	line = get_next_line(fd);
