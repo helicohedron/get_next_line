@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/19 20:13:39 by camille          ###   ########.fr       */
+/*   Updated: 2026/10/21 13:53:32 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ char *get_next_line(int fd)
 			saved_data = ft_strjoin(saved_data, buffer);
         }
         else if (size == 0)
-			return (saved_data);
+		{
+			free(buffer);			
+			return (saved_data); // should you return saved_data?
+		}
         else
         {
             free(buffer);
@@ -56,7 +59,8 @@ char *get_next_line(int fd)
 
 int	main(void)
 {
-	int	fd;
+	int		fd;
+	char	*line;
 
 	fd = open("test.txt", O_RDONLY);
 	if (fd == -1)
