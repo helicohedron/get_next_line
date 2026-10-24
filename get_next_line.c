@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/21 13:53:32 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/24 20:10:20 by camille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char *get_next_line(int fd)
 	int			size;
 	char		*line;
 	int			linesize;
+    char        *temp;
 
 	// check if saved_data has newline or EOF
 	while (!is_line(saved_data))
@@ -40,8 +41,10 @@ char *get_next_line(int fd)
         }
         else if (size == 0)
 		{
-			free(buffer);			
-			return (saved_data); // should you return saved_data?
+			free(buffer);
+            temp = saved_data; //prevent dangling ptr when freed
+            saved_data = NULL;			
+			return (temp);
 		}
         else
         {
@@ -65,8 +68,10 @@ int	main(void)
 	fd = open("test.txt", O_RDONLY);
 	if (fd == -1)
 		printf("Error");
-	line = get_next_line(fd);
-	printf("%s", line);
-	free(line);
+	while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("%s", line);
+        free(line);        
+    }
 	return(0);
 }
