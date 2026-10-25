@@ -6,14 +6,11 @@
 /*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 17:37:16 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/24 20:06:37 by camille          ###   ########.fr       */
+/*   Updated: 2026/10/25 19:00:45 by camille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-static void	*ft_memcpy(void *dst, const void *src, int n);
-static int	ft_strlen(const char *s);
 
 // detects \n in string
 int	is_line(char *string)
@@ -79,7 +76,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (newstr);
 }
 
-static void	*ft_memcpy(void *dst, const void *src, int n)
+void	*ft_memcpy(void *dst, const void *src, int n)
 {
 	int					i;
 	const unsigned char	*source;
@@ -96,7 +93,7 @@ static void	*ft_memcpy(void *dst, const void *src, int n)
 	return (dst);
 }
 
-static int	ft_strlen(const char *s)
+int	ft_strlen(const char *s)
 {
 	int	i;
 
