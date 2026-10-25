@@ -6,7 +6,7 @@
 /*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/25 18:58:34 by camille          ###   ########.fr       */
+/*   Updated: 2026/10/25 23:11:59 by camille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ static char    *update_data(char *string, int size)
     return (remainder);    
 }
 
+/*
 int	main(void)
 {
 	int		fd;
@@ -126,3 +127,4 @@ int	main(void)
     close(fd);
 	return(0);
 }
+*/
