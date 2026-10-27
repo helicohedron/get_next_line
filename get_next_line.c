@@ -6,7 +6,7 @@
 /*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/25 23:11:59 by camille          ###   ########.fr       */
+/*   Updated: 2026/10/27 14:33:59 by camille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,44 @@ Use only read(), malloc(), free()
 #include "get_next_line.h"
 
 static char    *update_data(char *string, int size);
+
+char    *save_line(int size, char *buffer, char *saved_data)
+{
+	char    *joined;
+    char    *temp;
+    
+    if (size > 0)
+    {
+        buffer[size] = '\0'; // null terminate the buffer           
+	    joined = ft_strjoin(saved_data, buffer);
+        if (joined)
+        {
+            free(saved_data);                
+            saved_data = joined;
+        }
+        else
+        {
+            free(saved_data);
+            free(buffer);
+            saved_data = NULL;
+            return (NULL);
+        }
+    }
+    else if (size == 0)
+    {
+        free(buffer);
+        temp = saved_data; //prevent dangling ptr when freed in main()
+        saved_data = NULL;			
+		return (temp);
+	}
+    else
+    {
+        free(buffer);
+        free(saved_data);
+        saved_data = NULL;
+        return (NULL);
+    }    
+}
 
 char *get_next_line(int fd)
 {
@@ -34,10 +72,13 @@ char *get_next_line(int fd)
 	// check if saved_data has newline or EOF
 	while (!is_line(saved_data))
 	{
-		buffer = malloc(BUFFER_SIZE + 1);
+        buffer = malloc(BUFFER_SIZE + 1);
 		if (!buffer)		
 			return (NULL);
 		size = read(fd, buffer, BUFFER_SIZE);
+        saved_data = save_line(size, buffer, saved_data);
+        /*
+        // insert save_line here
 		if (size > 0)
         {
             buffer[size] = '\0'; // null terminate the buffer           
@@ -68,7 +109,8 @@ char *get_next_line(int fd)
             free(saved_data);
             saved_data = NULL;
             return (NULL);
-        }    
+        }   
+        */ 
 	}
 
 	linesize = get_linesize(saved_data);
