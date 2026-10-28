@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/27 14:33:59 by camille          ###   ########.fr       */
+/*   Updated: 2026/10/28 17:47:30 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ Use only read(), malloc(), free()
 
 static char    *update_data(char *string, int size);
 
+/*
 char    *save_line(int size, char *buffer, char *saved_data)
 {
 	char    *joined;
@@ -57,7 +58,7 @@ char    *save_line(int size, char *buffer, char *saved_data)
         return (NULL);
     }    
 }
-
+*/
 char *get_next_line(int fd)
 {
 	static char	*saved_data;
@@ -76,16 +77,15 @@ char *get_next_line(int fd)
 		if (!buffer)		
 			return (NULL);
 		size = read(fd, buffer, BUFFER_SIZE);
-        saved_data = save_line(size, buffer, saved_data);
-        /*
-        // insert save_line here
+        // saved_data = save_line(size, buffer, saved_data);
 		if (size > 0)
         {
             buffer[size] = '\0'; // null terminate the buffer           
 			joined = ft_strjoin(saved_data, buffer);
             if (joined)
             {
-                free(saved_data);                
+                free(saved_data);
+				free(buffer);                
                 saved_data = joined;
             }
             else
@@ -100,7 +100,8 @@ char *get_next_line(int fd)
 		{
 			free(buffer);
             temp = saved_data; //prevent dangling ptr when freed in main()
-            saved_data = NULL;			
+			// fprintf(stdout, "Saved data: '%s'\n", saved_data);			
+            saved_data = NULL;
 			return (temp);
 		}
         else
@@ -110,13 +111,12 @@ char *get_next_line(int fd)
             saved_data = NULL;
             return (NULL);
         }   
-        */ 
 	}
 
 	linesize = get_linesize(saved_data);
 	line = malloc(linesize + 1);
-    if (!line)
-        return (NULL);
+	if (!line)
+		return (NULL);
 	line = get_line(line, saved_data, linesize);
     remainder = update_data(saved_data, linesize);
     if (!remainder)
@@ -155,7 +155,7 @@ int	main(void)
 	int		fd;
 	char	*line;
 
-	fd = open("test.txt", O_RDONLY);
+	fd = open("no_nl2", O_RDONLY);
 	if (fd == -1)
     {
 		printf("Error");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 17:37:16 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/25 19:00:45 by camille          ###   ########.fr       */
+/*   Updated: 2026/10/28 15:03:03 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	is_line(char *string)
 {
 	int	i;
 	
-    if (!string)
-        return (0);
+	if (!string)
+		return (0);
 	i = 0;
 	while (string[i])
 	{
@@ -53,8 +53,8 @@ int	get_linesize(char *string)
 	i = 0;
 	while (string[i] != '\n' && string[i])
 		i++;
-    if (string[i] == '\n')
-        i++;
+	if (string[i] == '\n')
+		i++;
 	return (i);
 }
 
