@@ -6,7 +6,7 @@
 /*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/27 14:33:59 by camille          ###   ########.fr       */
+/*   Updated: 2026/10/28 14:55:14 by camille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ Use only read(), malloc(), free()
 #include "get_next_line.h"
 
 static char    *update_data(char *string, int size);
+
+/*
 
 char    *save_line(int size, char *buffer, char *saved_data)
 {
@@ -57,7 +59,7 @@ char    *save_line(int size, char *buffer, char *saved_data)
         return (NULL);
     }    
 }
-
+*/
 char *get_next_line(int fd)
 {
 	static char	*saved_data;
@@ -76,9 +78,7 @@ char *get_next_line(int fd)
 		if (!buffer)		
 			return (NULL);
 		size = read(fd, buffer, BUFFER_SIZE);
-        saved_data = save_line(size, buffer, saved_data);
-        /*
-        // insert save_line here
+        // saved_data = save_line(size, buffer, saved_data);
 		if (size > 0)
         {
             buffer[size] = '\0'; // null terminate the buffer           
@@ -110,7 +110,6 @@ char *get_next_line(int fd)
             saved_data = NULL;
             return (NULL);
         }   
-        */ 
 	}
 
 	linesize = get_linesize(saved_data);
