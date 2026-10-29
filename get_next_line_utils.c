@@ -6,7 +6,7 @@
 /*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 17:37:16 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/29 14:45:45 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/29 16:03:08 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ int	is_line(char *string)
 }
 
 // copies and returns the string before & including \n
-// moves the ptr of parameter string
 char	*get_line(char *dst, char *src, int size)
 {
-	int					i;
+	int	i;
 
 	i = 0;
 	while (i < size)
