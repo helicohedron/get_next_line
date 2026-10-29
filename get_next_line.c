@@ -6,7 +6,7 @@
 /*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/29 15:30:30 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/29 15:36:15 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,40 +19,8 @@ Use only read(), malloc(), free()
 #include "get_next_line.h"
 
 static char	*update_data(char *string, int size);
-
-char	*save_chars(int size, char *buffer, char *saved_data)
-{
-	char	*joined;
-
-	if (size > 0)
-	{
-		buffer[size] = '\0';
-		joined = ft_strjoin(saved_data, buffer);
-		if (joined)
-		{
-			free(saved_data);
-			free(buffer);
-			return (joined);
-		}
-		else
-		{
-			free(saved_data);
-			free(buffer);
-			return (NULL);
-		}
-	}
-	else if (size == 0)
-	{
-		free(buffer);
-		return (saved_data);
-	}
-	else
-	{
-		free(buffer);
-		free(saved_data);
-		return (NULL);
-	}
-}
+static char	*save_chars(int size, char *buffer, char *saved_data);
+static void	free_alldata(char *s1, char *s2);
 
 char	*get_next_line(int fd)
 {
@@ -90,6 +58,43 @@ char	*get_next_line(int fd)
 	free(saved_data);
 	saved_data = remainder;
 	return (line);
+}
+
+char	*save_chars(int size, char *buffer, char *saved_data)
+{
+	char	*joined;
+
+	if (size > 0)
+	{
+		buffer[size] = '\0';
+		joined = ft_strjoin(saved_data, buffer);
+		if (joined)
+		{
+			free_alldata(saved_data, buffer);
+			return (joined);
+		}
+		else
+		{
+			free_alldata(saved_data, buffer);
+			return (NULL);
+		}
+	}
+	else if (size == 0)
+	{
+		free(buffer);
+		return (saved_data);
+	}
+	else
+	{
+		free_alldata(saved_data, buffer);
+		return (NULL);
+	}
+}
+
+static void	free_alldata(char *s1, char *s2)
+{
+	free(s1);
+	free(s2);
 }
 
 static char	*update_data(char *string, int size)

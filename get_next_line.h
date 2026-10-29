@@ -6,7 +6,7 @@
 /*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 17:37:09 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/29 13:41:23 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/29 15:38:17 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ int		get_linesize(char *string);
 char	*ft_strjoin(char *s1, char *s2);
 void	*ft_memcpy(void *dst, const void *src, int n);
 int	    ft_strlen(const char *s);
-char    *save_chars(int size, char *buffer, char *saved_data);
 
 #endif
