@@ -6,7 +6,7 @@
 /*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/29 15:36:15 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/29 15:53:15 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,9 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = get_line(line, saved_data, linesize);
 	remainder = update_data(saved_data, linesize);
-	if (!remainder)
-	{
-		free(saved_data);
-		saved_data = NULL;
-		return (line);
-	}
 	free(saved_data);
+	if (!remainder)
+		saved_data = NULL;
 	saved_data = remainder;
 	return (line);
 }
@@ -73,22 +69,14 @@ char	*save_chars(int size, char *buffer, char *saved_data)
 			free_alldata(saved_data, buffer);
 			return (joined);
 		}
-		else
-		{
-			free_alldata(saved_data, buffer);
-			return (NULL);
-		}
 	}
 	else if (size == 0)
 	{
 		free(buffer);
 		return (saved_data);
 	}
-	else
-	{
-		free_alldata(saved_data, buffer);
-		return (NULL);
-	}
+	free_alldata(saved_data, buffer);
+	return (NULL);
 }
 
 static void	free_alldata(char *s1, char *s2)
