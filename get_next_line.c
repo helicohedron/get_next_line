@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/29 17:09:23 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/29 17:36:35 by camille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ Use only read(), malloc(), free()
 #include "get_next_line.h"
 
 static char	*update_data(char *string, int size);
-char		*save_chars(int fd, char *saved_data);
+char		*save_chars(int fd, char *saved_data, int *size);
 static void	free_alldata(char *s1, char *s2);
 
 char	*get_next_line(int fd)
@@ -28,10 +28,12 @@ char	*get_next_line(int fd)
 	char		*line;
 	int			linesize;
 	char		*remainder;
+    int         size;
 
-	while (!is_line(saved_data))
+    size = 1;
+	while (!is_line(saved_data) && size != 0)
 	{
-		saved_data = save_chars(fd, saved_data);
+		saved_data = save_chars(fd, saved_data, &size);
 		if (!saved_data)
 			return (NULL);
 		// if (size == 0)
@@ -50,19 +52,18 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-char	*save_chars(int fd, char *saved_data)
+char	*save_chars(int fd, char *saved_data, int *size)
 {
 	char	*buffer;
 	char	*joined;
-	int		size;
 
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	size = read(fd, buffer, BUFFER_SIZE);
-	if (size > 0)
+	*size = read(fd, buffer, BUFFER_SIZE);
+	if (*size > 0)
 	{
-		buffer[size] = '\0';
+		buffer[*size] = '\0';
 		joined = ft_strjoin(saved_data, buffer);
 		if (joined)
 		{
@@ -70,7 +71,7 @@ char	*save_chars(int fd, char *saved_data)
 			return (joined);
 		}
 	}
-	else if (size == 0)
+	else if (*size == 0)
 	{
 		free(buffer);
 		return (saved_data);
