@@ -6,7 +6,7 @@
 /*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 17:37:09 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/29 15:38:17 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/29 18:35:46 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@
 # include <fcntl.h>
 # include <unistd.h>
 
-char    *get_next_line(int fd);
-int		is_line(char *string);
+char	*get_next_line(int fd);
 char	*get_line(char *dst, char *src, int size);
 int		get_linesize(char *string);
 char	*ft_strjoin(char *s1, char *s2);
 void	*ft_memcpy(void *dst, const void *src, int n);
-int	    ft_strlen(const char *s);
+int		ft_strlen(const char *s);
 
 #endif

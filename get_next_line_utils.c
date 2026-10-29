@@ -6,30 +6,12 @@
 /*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 17:37:16 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/29 17:05:28 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/29 18:34:43 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// detects \n in string
-int	is_line(char *string)
-{
-	int	i;
-	
-	if (!string)
-		return (0);
-	i = 0;
-	while (string[i])
-	{
-		if (string[i] == '\n')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-// copies and returns the string before & including \n
 char	*get_line(char *dst, char *src, int size)
 {
 	int	i;
@@ -44,7 +26,6 @@ char	*get_line(char *dst, char *src, int size)
 	return (dst);
 }
 
-// returns the size of line including \n
 int	get_linesize(char *string)
 {
 	int	i;
@@ -57,7 +38,6 @@ int	get_linesize(char *string)
 	return (i);
 }
 
-// function that appends a string to a new string
 char	*ft_strjoin(char *s1, char *s2)
 {
 	int		s1_len;

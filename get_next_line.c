@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camille <camille@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/29 17:36:35 by camille          ###   ########.fr       */
+/*   Updated: 2026/10/29 18:33:27 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ Use only read(), malloc(), free()
 static char	*update_data(char *string, int size);
 char		*save_chars(int fd, char *saved_data, int *size);
 static void	free_alldata(char *s1, char *s2);
+static int	is_line(char *string);
 
 char	*get_next_line(int fd)
 {
@@ -28,16 +29,14 @@ char	*get_next_line(int fd)
 	char		*line;
 	int			linesize;
 	char		*remainder;
-    int         size;
+	int			size;
 
-    size = 1;
+	size = 1;
 	while (!is_line(saved_data) && size != 0)
 	{
 		saved_data = save_chars(fd, saved_data, &size);
 		if (!saved_data)
 			return (NULL);
-		// if (size == 0)
-		// 	break ;
 	}
 	linesize = get_linesize(saved_data);
 	line = malloc(linesize + 1);
@@ -50,6 +49,22 @@ char	*get_next_line(int fd)
 		saved_data = NULL;
 	saved_data = remainder;
 	return (line);
+}
+
+static int	is_line(char *string)
+{
+	int	i;
+
+	if (!string)
+		return (0);
+	i = 0;
+	while (string[i])
+	{
+		if (string[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 char	*save_chars(int fd, char *saved_data, int *size)
