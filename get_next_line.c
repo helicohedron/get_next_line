@@ -6,7 +6,7 @@
 /*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/29 15:53:15 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/29 17:07:40 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,23 @@ Use only read(), malloc(), free()
 #include "get_next_line.h"
 
 static char	*update_data(char *string, int size);
-static char	*save_chars(int size, char *buffer, char *saved_data);
+char	*save_chars(int fd, char *saved_data);
 static void	free_alldata(char *s1, char *s2);
 
 char	*get_next_line(int fd)
 {
 	static char	*saved_data;
-	char		*buffer;
-	int			size;
 	char		*line;
 	int			linesize;
 	char		*remainder;
 
 	while (!is_line(saved_data))
 	{
-		buffer = malloc(BUFFER_SIZE + 1);
-		if (!buffer)
-			return (NULL);
-		size = read(fd, buffer, BUFFER_SIZE);
-		saved_data = save_chars(size, buffer, saved_data);
+		saved_data = save_chars(fd, saved_data);
 		if (!saved_data)
 			return (NULL);
-		if (size == 0)
-			break ;
+		// if (size == 0)
+		// 	break ;
 	}
 	linesize = get_linesize(saved_data);
 	line = malloc(linesize + 1);
@@ -56,10 +50,16 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-char	*save_chars(int size, char *buffer, char *saved_data)
+char	*save_chars(int fd, char *saved_data)
 {
+	char	*buffer;
 	char	*joined;
+	int		size;
 
+	buffer = malloc(BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	size = read(fd, buffer, BUFFER_SIZE);
 	if (size > 0)
 	{
 		buffer[size] = '\0';
@@ -103,7 +103,7 @@ static char	*update_data(char *string, int size)
 	return (remainder);
 }
 
-/*
+
 int	main(void)
 {
 	int		fd;
@@ -123,4 +123,4 @@ int	main(void)
 	close(fd);
 	return(0);
 }
-*/
+/**/
