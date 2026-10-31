@@ -6,7 +6,7 @@
 /*   By: jrosette <jrosette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/14 15:50:29 by jrosette          #+#    #+#             */
-/*   Updated: 2026/10/29 18:33:27 by jrosette         ###   ########.fr       */
+/*   Updated: 2026/10/31 16:32:21 by jrosette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*get_next_line(int fd)
 	char		*remainder;
 	int			size;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	size = 1;
 	while (!is_line(saved_data) && size != 0)
 	{
@@ -125,7 +127,7 @@ int	main(void)
 	int		fd;
 	char	*line;
 	
-	fd = open("test/test.txt", O_RDONLY);
+	fd = open("test.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		printf("Error");
